@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>투두 리스트 추가 페이지</title>
+</head>
+<body>
+<form action="/api/list" method="post">
+    <label for="title">제목</label>
+    <input type="text" name="title" id="title"><br>
+    <label for="description">내용</label>
+    <input type="text" name="description" id="description">
+
+    <button type="submit">제출</button>
+</form>
+</body>
+</html>
