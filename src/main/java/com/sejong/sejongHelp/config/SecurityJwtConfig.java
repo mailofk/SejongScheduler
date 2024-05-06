@@ -37,12 +37,17 @@ public class SecurityJwtConfig {
         http
                 .formLogin((auth) -> auth.disable());
 
+        //세션 방식은 사용하지 않게 설정
+        http
+                .sessionManagement((session) -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         http
                 .httpBasic((auth) -> auth.disable());
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/login","/api/join").permitAll()
+                        .requestMatchers("/", "/login","/api/join", "/loginPage").permitAll()
                         .anyRequest().authenticated()
                 );
 
@@ -54,13 +59,6 @@ public class SecurityJwtConfig {
                 .addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class);
         http
                 .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);//필터 이름, 필터 넣을 위치
-
-
-        //세션 방식은 사용하지 않게 설정
-        http
-                .sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
 
         return http.build();
     }

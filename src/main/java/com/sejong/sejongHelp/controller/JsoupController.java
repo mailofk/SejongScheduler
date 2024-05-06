@@ -2,9 +2,12 @@ package com.sejong.sejongHelp.controller;
 
 import com.sejong.sejongHelp.domain.Course;
 import com.sejong.sejongHelp.domain.TitleInfo;
+import com.sejong.sejongHelp.dto.MemberForm;
 import com.sejong.sejongHelp.service.JsoupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -16,16 +19,14 @@ public class JsoupController {
 
     private final JsoupService jsoupService;
 
-    @GetMapping("/here")
-    public String kekero() {
-        return "hello here";
-    }
-
-    @GetMapping("/title")
-    public List<TitleInfo> makeIt() throws IOException {
+    @PostMapping("/title")
+    public List<TitleInfo> makeIt(@RequestBody MemberForm memberForm) throws IOException {
         //폼 만들기 전까지는 임시로 직접 설정 (나중에 @ModelAttribute 등으로 파라미터 설정)
-        String username = "21011859";
-        String password = "rnjsgusdn99@";
+//        String username = "21011859";
+//        String password = "rnjsgusdn99@";
+
+        String username = memberForm.getStudentId();
+        String password = memberForm.getPassword();
 
         return jsoupService.getTitleInfos(username, password);
     }

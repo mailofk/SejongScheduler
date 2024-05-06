@@ -24,7 +24,6 @@ public class JsoupService {
 
         Document doc = getDocument(username, password, "https://ecampus.sejong.ac.kr/calendar/view.php?view=upcoming");
 
-
         Elements tasks = doc.select("div.calendar-name-date");
         List<TitleInfo> titleInfos = new ArrayList<>();
 
