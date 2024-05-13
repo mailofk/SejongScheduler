@@ -18,11 +18,14 @@ public class Course {
     @Column(nullable = false)
     private String title;
 
+    private int taskCount;
+
     public Course() {
 
     }
 
     public Course(String title) {
+        this.taskCount = 0;
         this.title = title;
     }
 }

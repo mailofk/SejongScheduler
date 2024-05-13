@@ -18,11 +18,7 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping("/course")
-    public List<Course> makeCourseTitle() throws IOException {
-        //폼 만들기 전까지는 임시로 직접 설정 (나중에 @ModelAttribute 등으로 파라미터 설정)
-        String username = "21011859";
-        String password = "rnjsgusdn99@";
-
+    public List<Course> makeCourseTitle(String username, String password) throws IOException {
         List<Course> courses = courseService.getCourseTitle(username, password);
         //이전에 가져왔던 과목명 모두 초기화 시키기
         courseService.deleteAll();

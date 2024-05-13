@@ -4,7 +4,6 @@ import com.sejong.sejongHelp.domain.Course;
 import com.sejong.sejongHelp.dto.CourseForm;
 import com.sejong.sejongHelp.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.C;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +33,19 @@ public class CourseService {
         courseRepository.deleteAll();
     }
 
+    public List<Course> getCourseList() {
+        return courseRepository.findAll();
+    }
+
+    public HashMap<String, Integer> getCourseMap() {
+        HashMap<String, Integer> courseMap = new HashMap<String, Integer>();
+        for (Course course : courseRepository.findAll()) {
+            courseMap.put(course.getTitle(), 0);
+        }
+
+        return courseMap;
+    }
+
     public List<Course> getCourseTitle(String username, String password) throws IOException {
 
         Document doc = getDocument(username, password, "https://ecampus.sejong.ac.kr/dashboard.php");
@@ -42,7 +55,10 @@ public class CourseService {
 
         for (Element courseTitle : courseTitles) {
             String title = courseTitle.ownText();
-            courseTitleList.add(new Course(title));
+            Course newCourse = new Course(title);
+
+            courseTitleList.add(newCourse);
+            courseRepository.save(newCourse);
         }
 
         return courseTitleList;

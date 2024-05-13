@@ -10,6 +10,14 @@
 <div>학번 : <span th:text="${studentId}"></span></div>
 <hr>
 
+<div th:each="course : ${courseList}">
+    <p th:text="${course.title}"></p>
+    <p th:text="'미완료 일정 : '+${course.taskCount} + '개'"></p>
+    <hr>
+</div>
+
+<br><hr><br>
+
 <div th:each="titleInfo : ${titleInfos}">
     <p th:text="${titleInfo.subject}"></p>
     <p th:text="${titleInfo.title}"></p>
