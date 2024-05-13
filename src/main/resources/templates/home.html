@@ -11,8 +11,17 @@
 <hr>
 
 <div th:each="titleInfo : ${titleInfos}">
+    <p th:text="${titleInfo.subject}"></p>
     <p th:text="${titleInfo.title}"></p>
     <p th:text="${titleInfo.dueDate}"></p>
+    <hr>
+</div>
+
+<br><hr><br>
+
+<div th:each="month : ${monthData}">
+    <p th:text="${month.date}"></p>
+    <p th:text="${month.title}"></p>
     <hr>
 </div>
 

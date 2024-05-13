@@ -20,10 +20,7 @@ public class JsoupController {
     private final JsoupService jsoupService;
 
     @PostMapping("/title")
-    public List<TitleInfo> makeIt(@RequestBody MemberForm memberForm) throws IOException {
-        //폼 만들기 전까지는 임시로 직접 설정 (나중에 @ModelAttribute 등으로 파라미터 설정)
-//        String username = "21011859";
-//        String password = "rnjsgusdn99@";
+    public List<TitleInfo> makeTitle(@RequestBody MemberForm memberForm) throws IOException {
 
         String username = memberForm.getStudentId();
         String password = memberForm.getPassword();
@@ -49,8 +46,8 @@ public class JsoupController {
         return header + jsoupService.getMonthTable() + end;
     }
 
-    @GetMapping("/month-list")
-    public String makeMonthList() throws IOException {
-        return jsoupService.getMonthList();
-    }
+//    @GetMapping("/month-list")
+//    public String makeMonthList() throws IOException {
+//        return jsoupService.getMonthList();
+//    }
 }

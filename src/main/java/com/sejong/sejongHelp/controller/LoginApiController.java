@@ -2,21 +2,16 @@ package com.sejong.sejongHelp.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sejong.sejongHelp.domain.Member;
-import com.sejong.sejongHelp.domain.ToDoList;
 import com.sejong.sejongHelp.dto.*;
 import com.sejong.sejongHelp.service.LoginValidationService;
 import com.sejong.sejongHelp.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -70,12 +65,5 @@ public class LoginApiController {
         }
     }
 
-
-//    @GetMapping("/api/member-list")
-//    @ResponseBody
-//    public List<ToDoListForm> getList(@AuthenticationPrincipal CustomUserDetails member) {
-//        Long memberId = member.getMemberId();
-//        return memberService.findLists(memberId);
-//    }
 
 }

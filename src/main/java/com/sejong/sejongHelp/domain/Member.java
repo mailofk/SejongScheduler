@@ -33,9 +33,6 @@ public class Member {
 
     private String name;
 
-//    @OneToMany(mappedBy = "member")
-//    private List<ToDoList> toDoLists = new ArrayList<>();
-
     @CreatedDate
     private LocalDateTime createdAt;
 
@@ -52,9 +49,4 @@ public class Member {
         this.name = name;
     }
 
-    //연관관계 편의 메서드
-//    public void setToDoList(ToDoList toDoList) {
-//        toDoLists.add(toDoList);
-//        toDoList.setMember(this);
-//    }
 }
