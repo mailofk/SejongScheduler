@@ -17,6 +17,10 @@ configurations {
 	}
 }
 
+tasks.withType(Jar) {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 repositories {
 	mavenCentral()
 }
@@ -32,6 +36,9 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 
+	implementation group: 'org.springframework.boot', name: 'spring-boot-maven-plugin', version: '3.2.3'
+	//빌드용 도구
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -41,6 +48,6 @@ dependencies {
 	implementation 'javax.xml.bind:jaxb-api:2.3.1' //xml 문서와 Java 객체 간 매핑 자동화
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+//tasks.named('test') {
+//	useJUnitPlatform()
+//}
