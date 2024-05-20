@@ -14,6 +14,9 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    //임시수정 --> 모두 수정한 후 제거하는 것이 목표
+//    BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
     public Member save(JoinForm joinForm) {
         Member member = new Member(joinForm.getStudentId(),
                 bCryptPasswordEncoder.encode(joinForm.getPassword()),

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sejong.sejongHelp.dto.*;
 import com.sejong.sejongHelp.service.LoginValidationService;
 import com.sejong.sejongHelp.service.MemberService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class LoginApiController {
 //        return "redirect:/login"; //리다이렉트 문제로 UsernamePasswordAuthenticationFilter가 적용되어서, 이렇게 할 수 없음
         //애초에 회원가입 후, 바로 로그인 페이지로 리다이렉트 하는 것은 좋은 방법이 아님
 
-        return "redirect:/main";
+        return "redirect:/";
     }
 
     //오로지 인증 용도로만 사욯할 수 있게끔 진행

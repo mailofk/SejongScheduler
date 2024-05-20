@@ -54,6 +54,7 @@ public class SecurityJwtConfig {
         LoginFilter loginFilter = new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil);
         loginFilter.setFilterProcessesUrl("/login"); //로그인 과정 진행할 경로
         loginFilter.setUsernameParameter("studentId"); //받을 파라미터 이름 설정
+        //Form-login 방식으로 데이터 받아와야 함
 
         http
                 .addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class);
