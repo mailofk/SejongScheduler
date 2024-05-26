@@ -25,4 +25,8 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
+    public boolean checkDuplicate(String id) {
+        return memberRepository.existsByStudentId(id);
+    }
+
 }

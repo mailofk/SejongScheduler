@@ -25,11 +25,6 @@ public class JsoupService {
 
     public List<TitleInfo> getTitleInfos(String username, String password) throws IOException {
 
-        HashMap<String, Integer> courseMap = courseService.getCourseMap();
-
-        List<Course> courseList = courseService.getCourseList();
-
-
         Document doc = getDocument(username, password, "https://ecampus.sejong.ac.kr/calendar/view.php?view=upcoming");
 
         Elements tasks = doc.select("div.event");
@@ -40,25 +35,26 @@ public class JsoupService {
         for (Element task : tasks) {
             String title = task.select("div.calendar-name").text();
             String date = task.select("div.calendar-date").text();
+            String imageSrc = task.select("img").attr("src");
+
+            String type = "others";
+            if (imageSrc.contains("quiz")) {
+                type = "quiz";
+            } else if (imageSrc.contains("vod")) {
+                type = "vod";
+            } else if (imageSrc.contains("assign")) {
+                type = "assign";
+            }
 
             String subjectNum = task.attr("data-course-id");
             //구성요소 "속성이름"에 대한 값을 반환
 
             String subject = subjectNames.select("option[value=" + subjectNum + "]").text();
-            //해당하는 과목의 value에 1씩 더해줌 (기본값은 0부터 시작)
-            Integer taskNum = courseMap.get(subject);
-            courseMap.put(subject, taskNum + 1);
 
-            TitleInfo titleInfo = new TitleInfo(title, date, subject);
+            TitleInfo titleInfo = new TitleInfo(title, date, subject, type);
 
             titleInfoRepository.save(titleInfo);
             titleInfos.add(titleInfo);
-        }
-
-        //최종 과목 일정 개수를 해당하는 과목 정보에 추가
-        for (Course course : courseList) {
-            Integer totalTaskNum = courseMap.get(course.getTitle());
-            course.setTaskCount(totalTaskNum);
         }
 
         return titleInfos;
@@ -132,8 +128,10 @@ public class JsoupService {
         Elements monthTasks = allMonthList.select("li");
 
         for (Element monthTask : monthTasks) {
-            String date = month + " " + monthTask.select("span").text();
+            String date = monthTask.select("span").text();
             String title = monthTask.text().replace(date, "").trim();
+
+            date = month + " " + date;
 
             monthData.add(new MonthListForm(date, title));
         }

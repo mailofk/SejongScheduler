@@ -41,7 +41,10 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         String studentId = jwtUtil.getUserName(token);
-        Member member = new Member(studentId, "temp", "temp", "temp");
+        String major = jwtUtil.getMajor(token);
+        String name = jwtUtil.getMemberName(token);
+
+        Member member = new Member(studentId, "temp", major, name);
 
         CustomUserDetails customUserDetails = new CustomUserDetails(member);
 

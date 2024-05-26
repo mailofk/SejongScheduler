@@ -36,7 +36,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
         String studentId = customUserDetails.getUsername(); //학번 가져오게 됨
-        String token = jwtUtil.createJwt(studentId, 60 * 60 * 1000L); //1시간으로 설정
+        String major = customUserDetails.getMajor();
+        String name = customUserDetails.getMemberName();
+
+        String token = jwtUtil.createJwt(studentId, major, name, 60 * 60 * 1000L); //1시간으로 설정
 
         response.addHeader("Authorization", "Bearer " + token);
 //        response.sendRedirect("/"); //수정한 부분

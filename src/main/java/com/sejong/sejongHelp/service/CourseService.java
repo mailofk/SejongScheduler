@@ -51,6 +51,7 @@ public class CourseService {
         Document doc = getDocument(username, password, "https://ecampus.sejong.ac.kr/dashboard.php");
 
         Elements courseTitles = doc.select("div.course-title h3");
+
         List<Course> courseTitleList = new ArrayList<>();
 
         for (Element courseTitle : courseTitles) {

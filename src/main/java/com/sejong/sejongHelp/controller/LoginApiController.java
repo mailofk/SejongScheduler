@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class LoginApiController {
 
@@ -23,29 +23,37 @@ public class LoginApiController {
 
     //회원가입 진행 메서드
     @PostMapping("/api/join")
-    public String joinMember(@RequestBody JoinForm joinForm) {
-        memberService.save(joinForm);
+    public ApiSuccessForm joinMember(@RequestBody JoinForm joinForm) {
 
-//        return "redirect:/login"; //리다이렉트 문제로 UsernamePasswordAuthenticationFilter가 적용되어서, 이렇게 할 수 없음
-        //애초에 회원가입 후, 바로 로그인 페이지로 리다이렉트 하는 것은 좋은 방법이 아님
+        ApiSuccessForm apiSuccessForm = new ApiSuccessForm();
+        apiSuccessForm.setResult(true);
 
-        return "redirect:/";
+        if (memberService.checkDuplicate(joinForm.getStudentId())) {
+            apiSuccessForm.setResult(false);
+        }
+        if (apiSuccessForm.isResult()) {
+            memberService.save(joinForm);
+        }
+
+        return apiSuccessForm;
     }
 
     //오로지 인증 용도로만 사욯할 수 있게끔 진행
     @PostMapping("/api/validation")
-    @ResponseBody
-    public ResponseEntity<String> getValidation(@RequestBody ValidationForm validationForm, Model model) {
+    public ApiSuccessForm getValidation(@RequestBody ValidationForm validationForm) {
 
         String url = "https://auth.imsejong.com/auth?DosejongSession";
         boolean isValidated = loginValidationService.loginValidate(url, validationForm);
 
-        return new ResponseEntity<String>(String.valueOf(isValidated), HttpStatus.OK);
+        ApiSuccessForm apiSuccessForm = new ApiSuccessForm();
+        apiSuccessForm.setResult(isValidated);
+
+        return apiSuccessForm;
     }
 
     //실제 사용할 api
+    //수정필요
     @RequestMapping("/api/login-page")
-    @ResponseBody
     public ResponseEntity<String> loginV2(@RequestBody ValidationForm validationForm) {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://auth.imsejong.com/auth?DosejongSession";

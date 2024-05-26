@@ -31,6 +31,26 @@ public class JwtUtil {
                 .get("studentId", String.class);
     }
 
+    public String getMajor(String token) {
+
+        return Jwts.parser()
+                .verifyWith(secretKey) //가지고 있는 secretKey 이용하여 검증 진행
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("major", String.class);
+    }
+
+    public String getMemberName(String token) {
+
+        return Jwts.parser()
+                .verifyWith(secretKey) //가지고 있는 secretKey 이용하여 검증 진행
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("name", String.class);
+    }
+
     public Boolean isExpired(String token) {
 
         return Jwts.parser()
@@ -42,13 +62,16 @@ public class JwtUtil {
                 .before(new Date());
     }
 
-    public String createJwt(String studentId, Long expiredMs) {
+    public String createJwt(String studentId, String major, String name, Long expiredMs) {
 
         return Jwts.builder()
                 .claim("studentId", studentId) //payload 부분에 학번 정보는 기입하도록 설정
+                .claim("major", major)
+                .claim("name", name)
                 .issuedAt(new Date(System.currentTimeMillis())) //현재의 발행 시간
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
                 .signWith(secretKey)
                 .compact();
     }
+
 }

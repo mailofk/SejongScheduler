@@ -17,14 +17,16 @@ public class TitleInfo {
     private String title;
     private String dueDate;
     private String subject;
+    private String type;
 
     public TitleInfo() {
     }
 
-    public TitleInfo(String title, String dueDate, String subject) {
+    public TitleInfo(String title, String dueDate, String subject,String type) {
         this.title = title;
         this.dueDate = dueDate;
         this.subject = subject;
+        this.type = type;
     }
 
 
