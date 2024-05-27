@@ -47,7 +47,7 @@ public class SecurityJwtConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/", "/login","/api/join", "/loginPage").permitAll()
+                        .requestMatchers("/", "/login","/api/join", "/loginPage", "/api/validation").permitAll()
                         .anyRequest().authenticated()
                 );
 

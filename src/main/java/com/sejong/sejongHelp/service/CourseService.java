@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,15 +36,6 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public HashMap<String, Integer> getCourseMap() {
-        HashMap<String, Integer> courseMap = new HashMap<String, Integer>();
-        for (Course course : courseRepository.findAll()) {
-            courseMap.put(course.getTitle(), 0);
-        }
-
-        return courseMap;
-    }
-
     public List<Course> getCourseTitle(String username, String password) throws IOException {
 
         Document doc = getDocument(username, password, "https://ecampus.sejong.ac.kr/dashboard.php");
@@ -56,6 +46,12 @@ public class CourseService {
 
         for (Element courseTitle : courseTitles) {
             String title = courseTitle.ownText();
+            if (!title.startsWith("[")) {
+                title = title.split(" ")[0];
+            } else {
+                title = title.split(" \\(\\(LEARNING")[0];
+            }
+
             Course newCourse = new Course(title);
 
             courseTitleList.add(newCourse);
