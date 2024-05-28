@@ -19,14 +19,17 @@ public class TitleInfo {
     private String subject;
     private String type;
 
+    private String user;
+
     public TitleInfo() {
     }
 
-    public TitleInfo(String title, String dueDate, String subject,String type) {
+    public TitleInfo(String title, String dueDate, String subject,String type, String user) {
         this.title = title;
         this.dueDate = dueDate;
         this.subject = subject;
         this.type = type;
+        this.user = user;
     }
 
 

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -23,17 +24,20 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
 
-    public Course save(CourseForm courseForm) {
-        Course course = new Course(courseForm.getTitle());
-        return courseRepository.save(course);
+    public void deleteAll(String username) {
+        courseRepository.deleteAllByUser(username);
     }
 
-    public void deleteAll() {
-        courseRepository.deleteAll();
-    }
+    public List<Course> getCourseList(String username) {
+        List<Course> specificCourse = new ArrayList<>();
+        List<Course> allCourses = courseRepository.findAll();
 
-    public List<Course> getCourseList() {
-        return courseRepository.findAll();
+        for (Course course : allCourses) {
+            if (course.getUser().equals(username)){
+                specificCourse.add(course);
+            }
+        }
+        return specificCourse;
     }
 
     public List<Course> getCourseTitle(String username, String password) throws IOException {
@@ -52,7 +56,7 @@ public class CourseService {
                 title = title.split(" \\(\\(LEARNING")[0];
             }
 
-            Course newCourse = new Course(title);
+            Course newCourse = new Course(title, username);
 
             courseTitleList.add(newCourse);
             courseRepository.save(newCourse);

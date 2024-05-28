@@ -20,12 +20,15 @@ public class Course {
 
     private int taskCount;
 
+    private String user;
+
     public Course() {
 
     }
 
-    public Course(String title) {
+    public Course(String title, String user) {
         this.taskCount = 0;
         this.title = title;
+        this.user = user;
     }
 }

@@ -7,6 +7,7 @@ import com.sejong.sejongHelp.dto.MonthListForm;
 import com.sejong.sejongHelp.service.CourseService;
 import com.sejong.sejongHelp.service.JsoupService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,15 +25,17 @@ public class FetchApiController {
 
     //과목 제목 크롤링 메서드
     @PostMapping("/api/title")
+    @Transactional
     public List<Course> getSubjectTitle(@RequestBody MemberForm memberForm) throws IOException {
-        courseService.deleteAll();
+        courseService.deleteAll(memberForm.getStudentId());
         return courseService.getCourseTitle(memberForm.getStudentId(), memberForm.getPassword());
     }
 
     //과목별 일정 크롤링 메서드
     @PostMapping("/api/subject")
+    @Transactional
     public List<TitleInfo> getSubjectInfo(@RequestBody MemberForm memberForm) throws IOException {
-        jsoupService.deleteTitleInfos();
+        jsoupService.deleteTitleInfos(memberForm.getStudentId());
         return jsoupService.getTitleInfos(memberForm.getStudentId(), memberForm.getPassword());
     }
 

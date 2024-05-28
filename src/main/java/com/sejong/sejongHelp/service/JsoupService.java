@@ -51,7 +51,7 @@ public class JsoupService {
 
             String subject = subjectNames.select("option[value=" + subjectNum + "]").text();
 
-            TitleInfo titleInfo = new TitleInfo(title, date, subject, type);
+            TitleInfo titleInfo = new TitleInfo(title, date, subject, type, username);
 
             titleInfoRepository.save(titleInfo);
             titleInfos.add(titleInfo);
@@ -60,13 +60,13 @@ public class JsoupService {
         return titleInfos;
     }
 
-    public List<TitleInfo> getExistTitleInfos() {
+    public List<TitleInfo> getExistTitleInfos(String username) {
 
-        return titleInfoRepository.findAll();
+        return titleInfoRepository.findAllByUser(username);
     }
 
-    public void deleteTitleInfos() {
-        titleInfoRepository.deleteAll();
+    public void deleteTitleInfos(String username) {
+        titleInfoRepository.deleteAllByUser(username);
     }
 
     //이전 달 & 다음 달 정보 포함
